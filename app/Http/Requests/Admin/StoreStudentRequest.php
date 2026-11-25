@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StoreStudentRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return $this->user()?->role === 'admin';
+    }
+
+    /**
+     * Get the validation rules.
+     */
+    public function rules(): array
+    {
+        return [
+            // User Information
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'unique:users,email',
+            ],
+
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+
+            // Student Information
+            'department' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'status' => [
+                'required',
+                Rule::in(['active', 'inactive']),
+            ],
+        ];
+    }
+
+    /**
+     * Custom Validation Messages.
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Student name is required.',
+
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.unique' => 'This email address is already registered.',
+
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters.',
+            'password.confirmed' => 'Password confirmation does not match.',
+
+            'department.required' => 'Department is required.',
+
+            'status.required' => 'Student status is required.',
+            'status.in' => 'Invalid student status.',
+        ];
+    }
+}
