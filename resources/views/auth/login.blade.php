@@ -2,46 +2,36 @@
 
 @section('content')
 
-<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light py-5">
+<div class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
 
     <div class="row justify-content-center w-100">
 
-        <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+        <div class="col-md-6 col-lg-5 col-xl-4">
 
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="card border shadow-sm">
 
                 {{-- Header --}}
-                <div class="card-header text-center text-white border-0 py-4"
-                     style="background: linear-gradient(135deg, #0d6efd, #4f46e5);">
+                <div class="card-header bg-white text-center py-4">
 
-                    <div class="mb-3">
-                        <span class="bg-white bg-opacity-25 rounded-circle d-inline-flex align-items-center justify-content-center"
-                              style="width: 65px; height: 65px;">
+                    <h3 class="fw-bold text-dark mb-2">
+                        Login
+                    </h3>
 
-                            <span class="fs-2">🔐</span>
-
-                        </span>
-                    </div>
-
-                    <h3 class="fw-bold mb-2">Welcome Back!</h3>
-
-                    <p class="mb-0 text-white-50">
-                        Login to your Role Management System
+                    <p class="text-muted mb-0">
+                        Welcome back! Please login to your account.
                     </p>
 
                 </div>
 
-                {{-- Card Body --}}
-                <div class="card-body p-4 p-md-5">
+                {{-- Body --}}
+                <div class="card-body p-4">
 
                     {{-- Validation Errors --}}
                     @if ($errors->any())
 
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show">
 
-                            <strong>Login Failed!</strong>
-
-                            <ul class="mb-0 mt-2">
+                            <ul class="mb-0 ps-3">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
@@ -59,7 +49,7 @@
                         @csrf
 
                         {{-- Email --}}
-                        <div class="mb-4">
+                        <div class="mb-3">
 
                             <label for="email" class="form-label fw-semibold">
                                 Email Address
@@ -69,9 +59,9 @@
                                 type="email"
                                 name="email"
                                 id="email"
-                                class="form-control form-control-lg rounded-3 @error('email') is-invalid @enderror"
+                                class="form-control @error('email') is-invalid @enderror"
                                 value="{{ old('email') }}"
-                                placeholder="Enter your email"
+                                placeholder="Enter your email address"
                                 required
                                 autofocus
                             >
@@ -85,7 +75,7 @@
                         </div>
 
                         {{-- Password --}}
-                        <div class="mb-4">
+                        <div class="mb-3">
 
                             <label for="password" class="form-label fw-semibold">
                                 Password
@@ -97,17 +87,17 @@
                                     type="password"
                                     name="password"
                                     id="password"
-                                    class="form-control form-control-lg rounded-start-3"
+                                    class="form-control"
                                     placeholder="Enter your password"
                                     required
                                 >
 
                                 <button
-                                    class="btn btn-outline-secondary rounded-end-3"
                                     type="button"
+                                    class="btn btn-outline-secondary"
                                     onclick="togglePassword()"
                                 >
-                                    <span id="passwordText">Show</span>
+                                    Show
                                 </button>
 
                             </div>
@@ -115,7 +105,7 @@
                         </div>
 
                         {{-- Role --}}
-                        <div class="mb-4">
+                        <div class="mb-3">
 
                             <label for="role" class="form-label fw-semibold">
                                 Login As
@@ -124,11 +114,11 @@
                             <select
                                 name="role"
                                 id="role"
-                                class="form-select form-select-lg rounded-3 @error('role') is-invalid @enderror"
+                                class="form-select @error('role') is-invalid @enderror"
                                 required
                             >
 
-                                <option value="">Select Your Role</option>
+                                <option value="">Select your role</option>
 
                                 <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>
                                     Admin
@@ -167,7 +157,7 @@
                                 >
 
                                 <label for="remember" class="form-check-label">
-                                    Remember Me
+                                    Remember me
                                 </label>
 
                             </div>
@@ -177,52 +167,39 @@
                         {{-- Login Button --}}
                         <div class="d-grid">
 
-                            <button type="submit" class="btn btn-primary btn-lg rounded-3 fw-semibold py-3 shadow-sm">
-
-                                Sign In
-
+                            <button type="submit" class="btn btn-primary fw-semibold py-2">
+                                Login
                             </button>
 
                         </div>
 
                     </form>
 
-                    {{-- Divider --}}
-                    <div class="d-flex align-items-center my-4">
-
-                        <hr class="flex-grow-1">
-
-                        <span class="px-3 text-muted small">OR</span>
-
-                        <hr class="flex-grow-1">
-
-                    </div>
-
                     {{-- Register Link --}}
+                    <hr class="my-4">
+
                     <div class="text-center">
 
-                        <p class="text-muted mb-0">
-
+                        <span class="text-muted">
                             Don't have an account?
+                        </span>
 
-                            <a href="{{ route('register') }}"
-                               class="text-primary fw-bold text-decoration-none">
+                        <a href="{{ route('register') }}"
+                           class="text-primary text-decoration-none fw-semibold">
 
-                                Register Now
+                            Register Now
 
-                            </a>
-
-                        </p>
+                        </a>
 
                     </div>
 
                 </div>
 
                 {{-- Footer --}}
-                <div class="card-footer bg-white text-center border-top py-3">
+                <div class="card-footer bg-light text-center py-3">
 
                     <small class="text-muted">
-                        &copy; {{ date('Y') }} Role Management System. All Rights Reserved.
+                        &copy; {{ date('Y') }} Role Management System
                     </small>
 
                 </div>
@@ -240,18 +217,14 @@
     function togglePassword() {
 
         const password = document.getElementById('password');
-        const text = document.getElementById('passwordText');
+        const button = document.querySelector('.input-group button');
 
         if (password.type === 'password') {
-
             password.type = 'text';
-            text.innerText = 'Hide';
-
+            button.innerText = 'Hide';
         } else {
-
             password.type = 'password';
-            text.innerText = 'Show';
-
+            button.innerText = 'Show';
         }
 
     }
